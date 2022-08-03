@@ -29,6 +29,8 @@ RUN set -x; \
         export BUILD_ARCH="aarch64"; \
     elif [ "${TARGETARCH}" = "amd64" ]; then \
         export BUILD_ARCH="x86_64"; \
+    elif [ "${TARGETARCH}" = "arm/v7" ]; then \
+        export BUILD_ARCH="armhf"; \
     else \
         export BUILD_ARCH="${TARGETARCH}"; \
     fi \
