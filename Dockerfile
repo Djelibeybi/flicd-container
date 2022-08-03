@@ -11,8 +11,7 @@ ENV LANG="C.UTF-8" \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ARG S6_OVERLAY_VERSION \
-    FLICD_VERSION \
-    TARGETARCH
+    FLICD_VERSION
 
 WORKDIR /usr/src
 
@@ -24,18 +23,11 @@ RUN set -x; \
         tzdata \
         xz-utils; \
     mkdir -p /usr/share/man/man1; \
-    \
-    if [ "${TARGETARCH}" = "arm64" ]; then \
-        export BUILD_ARCH="aarch64"; \
-        export FLICD_ARCH="aarch64"; \
-    elif [ "${TARGETARCH}" = "amd64" ]; then \
-        export BUILD_ARCH="x86_64"; \
-        export FLICD_ARCH="x86_64"; \
-    elif [ "${TARGETARCH}" = "arm/v7" ]; then \
-        export BUILD_ARCH="armhf"; \
+    export BUILD_ARCH=$(uname -m); \
+    if [ "${BUILD_ARCH}" = "armv7l" ]; then \
         export FLICD_ARCH="armv6l"; \
     else \
-        export BUILD_ARCH="${TARGETARCH}"; \
+        export FLICD_ARCH="${BUILD_ARCH}"; \
     fi \
     ; \
     curl -L -f -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${BUILD_ARCH}.tar.xz" \
