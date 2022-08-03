@@ -27,10 +27,13 @@ RUN set -x; \
     \
     if [ "${TARGETARCH}" = "arm64" ]; then \
         export BUILD_ARCH="aarch64"; \
+        export FLICD_ARCH="aarch64"; \
     elif [ "${TARGETARCH}" = "amd64" ]; then \
         export BUILD_ARCH="x86_64"; \
+        export FLICD_ARCH="x86_64"; \
     elif [ "${TARGETARCH}" = "arm/v7" ]; then \
         export BUILD_ARCH="armhf"; \
+        export FLICD_ARCH="armv6l"; \;
     else \
         export BUILD_ARCH="${TARGETARCH}"; \
     fi \
@@ -44,7 +47,7 @@ RUN set -x; \
     curl -L -f -s "https://github.com/50ButtonsEach/fliclib-linux-hci/archive/refs/tags/${FLICD_VERSION}.tar.gz" \
         | tar zxvf - -C /usr/src/flicd --strip-components 1 \
     ; \
-    cp "/usr/src/flicd/bin/${BUILD_ARCH}/flicd" /usr/bin/flicd; \
+    cp "/usr/src/flicd/bin/${FLICD_ARCH}/flicd" /usr/bin/flicd; \
     chmod +x /usr/bin/flicd; \
     \
     rm -rf /var/lib/apt/lists/*; \
