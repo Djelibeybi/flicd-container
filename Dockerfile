@@ -33,7 +33,7 @@ RUN set -x; \
         export FLICD_ARCH="x86_64"; \
     elif [ "${TARGETARCH}" = "arm/v7" ]; then \
         export BUILD_ARCH="armhf"; \
-        export FLICD_ARCH="armv6l"; \;
+        export FLICD_ARCH="armv6l"; \
     else \
         export BUILD_ARCH="${TARGETARCH}"; \
     fi \
